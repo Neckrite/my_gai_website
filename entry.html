@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход/Регистрация | ГАИ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0a1a3a;
+      --secondary-color: #00a8ff;
+      --accent-color: #ff3366;
+      --light-color: #f8f9fa;
+      --dark-color: #1a1a2e;
+      --text-primary: rgba(255, 255, 255, 0.95);
+      --text-secondary: rgba(255, 255, 255, 0.7);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color)), 
+                  url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .auth-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .auth-container h2 {
+      color: var(--secondary-color);
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      font-family: 'Rajdhani', sans-serif;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .auth-container h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--secondary-color);
+    }
+    
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .auth-container input {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: all 0.3s;
+      color: white;
+    }
+    
+    /* Стили для выпадающего списка */
+    .auth-container select {
+      width: 100%;
+      padding: 12px 15px;
+      background: #000000; /* Чёрный фон */
+      color: white; /* Белый текст */
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+    }
+    
+    .auth-container input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .auth-container input:focus,
+    .auth-container select:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+    }
+    
+    .auth-container button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+    }
+    
+    .auth-container button:hover {
+      background: #0088cc;
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+    }
+    
+    .switch-link {
+      color: var(--secondary-color);
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    
+    .switch-link:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(0, 168, 255, 0.7);
+    }
+    
+    .top-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+    }
+    
+    .top-bar img {
+      width: 60px;
+      height: auto;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s;
+    }
+    
+    .top-bar img:hover {
+      transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+      .auth-container {
+        padding: 30px 20px;
+      }
+      
+      .auth-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      
+      .auth-container {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar" id="logo">
+    <img src="photo/logo.png" alt="Логотип ГАИ">
+  </div>
+
+  <div class="auth-container" id="authContainer">
+    <h2>Вход</h2>
+    <form id="loginForm">
+      <input type="text" id="loginName" placeholder="Имя" required>
+      <input type="text" id="loginSurname" placeholder="Фамилия" required>
+      <input type="password" id="loginPassword" placeholder="Пароль" required>
+      <select id="loginRole">
+        <option value="user">Пользователь</option>
+        <option value="admin">Администратор</option>
+      </select>
+      <button type="submit">Войти</button>
+    </form>
+    <div class="switch-link" id="switchToRegister">Нет аккаунта? Зарегистрируйтесь</div>
+  </div>
+  <script src="entry.js"></script>
+</body>
+</html>

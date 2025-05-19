@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка авто | ГАИ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a1a3a;
+            --secondary-color: #00a8ff;
+            --accent-color: #ff3366;
+            --light-color: #f8f9fa;
+            --dark-color: #1a1a2e;
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)), 
+                        url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .top-bar img {
+            width: 60px;
+            height: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s;
+        }
+
+        .top-bar img:hover {
+            transform: scale(1.1);
+        }
+
+        .car-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .car-container:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 40px rgba(0, 168, 255, 0.3);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .car-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .car-form input {
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .car-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .car-form input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        /* Стили для выпадающего списка */
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: #000 !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 10px center !important;
+            background-size: 15px !important;
+            padding-right: 30px !important;
+        }
+
+        select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        select option {
+            background: #000;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Стилизация скроллбара для выпадающего списка */
+        select::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        select::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        select::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        select::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        button {
+            padding: 12px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        button:hover {
+            background: #0088cc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 168, 255, 0.5);
+        }
+
+        .car-info {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .car-info.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .car-info p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .car-info strong {
+            color: var(--secondary-color);
+        }
+
+        .car-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .alert {
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert.error {
+            background: rgba(255, 51, 102, 0.2);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .alert.success {
+            background: rgba(0, 200, 100, 0.2);
+            border: 1px solid #00c864;
+            color: #00c864;
+            display: block;
+        }
+
+        .add-car-btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .add-car-form {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .add-car-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .add-car-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .add-car-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .add-car-form input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .file-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 12px;
+            background: rgba(0, 168, 255, 0.1);
+            border: 1px dashed var(--secondary-color);
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: rgba(0, 168, 255, 0.2);
+        }
+
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background: rgba(255, 51, 102, 0.2) !important;
+            border: 1px solid var(--accent-color) !important;
+            margin-top: 15px;
+            box-shadow: none;
+        }
+
+        .delete-btn:hover {
+            background: var(--accent-color) !important;
+        }
+
+        .admin-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .car-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar" id="logo">
+        <img src="photo/logo.png" alt="Логотип ГАИ">
+    </div>
+
+    <div class="car-container">
+        <h2>Проверка автомобиля</h2>
+        
+        <div class="car-form">
+            <input type="text" id="regNumber" placeholder="Введите гос. номер (формат: 1234AB-7)" required>
+            <button onclick="searchCar()">Проверить</button>
+            <div id="alert" class="alert"></div>
+        </div>
+        
+        <div class="car-info" id="carInfo">
+            <!-- Информация об автомобиле будет здесь -->
+        </div>
+        
+        <button id="addCarButton" class="add-car-btn" style="display: none;" onclick="showAddCarForm()">
+            Добавить автомобиль в базу
+        </button>
+        
+        <div id="addCarForm" class="add-car-form">
+            <div>
+                <label for="brand">Марка автомобиля</label>
+                <input type="text" id="brand" placeholder="Например: Toyota" required>
+            </div>
+            <div>
+                <label for="model">Модель</label>
+                <input type="text" id="model" placeholder="Например: Camry" required>
+            </div>
+            <div>
+                <label for="year">Год выпуска</label>
+                <input type="number" id="year" placeholder="Год выпуска" min="1886" max="2025" required>
+            </div>
+            <div>
+                <label for="engine">Объём двигателя (л)</label>
+                <input type="text" id="engine" placeholder="Например: 2.5" required>
+            </div>
+            <div>
+                <label for="type">Тип двигателя</label>
+                <select id="type" required>
+                    <option value="">Выберите тип</option>
+                    <option value="бензиновый">Бензиновый</option>
+                    <option value="дизельный">Дизельный</option>
+                    <option value="электрический">Электрический</option>
+                    <option value="гибрид">Гибрид</option>
+                </select>
+            </div>
+            <div>
+                <label for="newRegNumber">Гос. номер</label>
+                <input type="text" id="newRegNumber" placeholder="Формат: 1234AB-7" required>
+            </div>
+            <div class="file-input-container">
+                <label class="file-input-label">📁 Выберите фото автомобиля</label>
+                <input type="file" id="carImage" accept="image/*" required>
+            </div>
+            <button onclick="addCar()">Сохранить</button>
+            <button class="delete-btn" onclick="hideAddCarForm()">Отмена</button>
+        </div>
+    </div>
+
+    <script src="car.js"></script>
+</body>
+</html>

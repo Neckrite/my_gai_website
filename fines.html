@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ГАИ - Оплата штрафов</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0a1a3a;
+      --secondary-color: #00a8ff;
+      --accent-color: #ff3366;
+      --light-color: #f8f9fa;
+      --dark-color: #1a1a2e;
+      --text-primary: rgba(255, 255, 255, 0.95);
+      --text-secondary: rgba(255, 255, 255, 0.7);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color)), 
+                  url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 20px;
+    }
+    
+    .top-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 100;
+    }
+    
+    .auth-button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 60px;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: white;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .section-title h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary-color);
+    }
+    
+    .fines-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .fine {
+      background: rgba(0, 168, 255, 0.05);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+      border: 1px solid rgba(0, 168, 255, 0.1);
+    }
+    
+    .fine:hover {
+      background: rgba(0, 168, 255, 0.1);
+      border-color: var(--secondary-color);
+    }
+    
+    .fine p {
+      margin: 0;
+      color: var(--text-primary);
+    }
+    
+    .fine button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+    }
+    
+    .fine button:hover {
+      background: #0088cc;
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+    }
+    
+    .fine button:disabled {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .logo-link {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+    }
+    
+    .logo-link img {
+      width: 80px;
+      height: auto;
+      transition: transform 0.3s;
+    }
+    
+    .logo-link img:hover {
+      transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+      .fine {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .fines-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="logo-link">
+    <img src="photo/logo.png" alt="Логотип ГАИ">
+  </a>
+
+  <div class="top-bar">
+    <button class="auth-button" id="authButton">Личный кабинет</button>
+  </div>
+
+  <main>
+    <div class="container">
+      <div class="section-title">
+        <h2>Оплата штрафов</h2>
+      </div>
+      
+      <div class="fines-container">
+        <div id="finesList">
+          <!-- Список штрафов будет здесь -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="fines.js"></script>
+</body>
+</html>

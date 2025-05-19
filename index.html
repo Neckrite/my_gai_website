@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ГАИ РБ - Электронные сервисы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0a1a3a;
+      --secondary-color: #00a8ff;
+      --accent-color: #ff3366;
+      --light-color: #f8f9fa;
+      --dark-color: #1a1a2e;
+      --text-primary: rgba(255, 255, 255, 0.95);
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.15);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    
+    body {
+      background: 
+        linear-gradient(135deg, var(--primary-color), var(--dark-color)),
+        url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      background: linear-gradient(rgba(10, 26, 58, 0.7), rgba(26, 26, 46, 0.7));
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      text-align: left;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-out;
+      flex: 1;
+    }
+    
+    .logo-container img {
+      width: 120px;
+      height: auto;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .auth-button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+      text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+      font-size: 0.95rem;
+      margin-left: 30px;
+      align-self: flex-start;
+    }
+    
+    .auth-button:hover {
+      background: #0088cc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 255, 0.4);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2rem;
+      color: white;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .section-title h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary-color);
+    }
+
+    /* ===== SERVICES CARDS ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-align: center;
+      padding: 40px 25px;
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      position: relative;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      border-color: var(--secondary-color);
+      background: rgba(0, 168, 255, 0.1);
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--secondary-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .service-content h3 {
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .service-content p {
+      margin-bottom: 25px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      min-height: 60px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--secondary-color);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      max-width: 200px;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn:hover {
+      background: #0088cc;
+      box-shadow: 0 6px 20px rgba(0, 168, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 80px 0;
+      margin: 60px 0;
+      backdrop-filter: blur(5px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .feature-item {
+      text-align: center;
+      padding: 40px 25px;
+      background: rgba(0, 168, 255, 0.05);
+      border-radius: 16px;
+      transition: all 0.4s;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 168, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-item:hover {
+      background: rgba(0, 168, 255, 0.1);
+      transform: translateY(-8px);
+      border-color: var(--secondary-color);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--secondary-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    .feature-item:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: all 0.4s;
+      color: var(--secondary-color);
+    }
+    
+    .feature-item:hover .feature-icon {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    .feature-item h3 {
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      color: var(--secondary-color);
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .feature-item p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* ===== NEWS SECTION ===== */
+    .news {
+      padding: 80px 0;
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .news-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 1px solid var(--card-border);
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .news-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .news-content {
+      padding: 20px;
+    }
+    
+    .news-date {
+      color: var(--secondary-color);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    
+    .news-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    
+    .news-excerpt {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+    
+    .news-link {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .news-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 50px 0 30px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      padding: 0 20px;
+      text-align: left;
+    }
+
+    .footer-column h3 {
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary-color);
+    }
+
+    .footer-column p, 
+    .footer-column a {
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .footer-column a:hover {
+      color: var(--secondary-color);
+      padding-left: 5px;
+    }
+
+    .copyright {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header {
+        padding: 100px 20px 60px;
+      }
+      
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .auth-button {
+        margin: 20px 0 0;
+        align-self: center;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 40px 0;
+      }
+
+      .services-grid,
+      .features-grid,
+      .news-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .service-card {
+        padding: 30px 20px;
+      }
+
+      .features {
+        padding: 60px 0;
+        margin: 40px 0;
+      }
+
+      .feature-item {
+        padding: 30px 20px;
+      }
+      
+      .news {
+        padding: 60px 0;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+      }
+
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 80px 15px 40px;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.6rem;
+      }
+
+      .btn {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="header">
+      <div class="header-container">
+        <div class="logo-container">
+          <img src="photo/logo.png" alt="Логотип ГАИ РБ" />
+          <h1>Государственная Автоинспекция</h1>
+          <p>Электронные сервисы для вашего удобства</p>
+        </div>
+        <button class="auth-button" id="authButton">Войти/Зарегистрироваться</button>
+      </div>
+    </header>
+    
+    <section class="container">
+      <div class="section-title">
+        <h2>Сервисы</h2>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-content">
+            <h3>Запись на техосмотр</h3>
+            <p>Техосмотр без стресса — электронная запись и напоминание о дате посещения.</p>
+            <button class="btn" id="historyButton">Записаться</button>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-content">
+            <h3>Оплата штрафов</h3>
+            <p>Оплатите штрафы за 2 клика — без очередей, скрытых комиссий и бумажной волокиты!</p>
+            <button class="btn" id="finesButton">Перейти к оплате</button>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-content">
+            <h3>Информация об авто</h3>
+            <p>Полная проверка автомобиля — от техосмотра до владельцев, без визита в ГАИ.</p>
+            <button class="btn" id="convertorButton">Проверить авто</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="section-title">
+        <h2>Почему выбирают нас</h2>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <h3>Безопасность</h3>
+          <p>Гарантируем защиту персональных данных и юридическую точность всех операций.</p>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <h3>Скорость</h3>
+          <p>Среднее время обработки запроса — 2 минуты. Никаких очередей!</p>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">🔍</div>
+          <h3>Прозрачность</h3>
+          <p>Все этапы операций доступны для отслеживания в личном кабинете.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="news">
+      <div class="container">
+        <div class="section-title">
+          <h2>Новости ГАИ</h2>
+        </div>
+        
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-image" style="background-image: url('https://f.nodacdn.net/613684');"></div>
+            <div class="news-content">
+              <div class="news-date">15 мая 2023</div>
+              <h3 class="news-title">Новые правила техосмотра</h3>
+              <p class="news-excerpt">С 1 июня вводятся изменения в процедуру прохождения техосмотра транспортных средств.</p>
+            </div>
+          </div>
+          
+          <div class="news-card">
+            <div class="news-image" style="background-image: url('https://abreview.ru/upload/iblock/db7/db7824906cb969635b77b3a532a61123.jpg');"></div>
+            <div class="news-content">
+              <div class="news-date">10 мая 2023</div>
+              <h3 class="news-title">Электронные ПТС</h3>
+              <p class="news-excerpt">ГАИ РБ переходит на электронные паспорта транспортных средств с 1 июля 2023 года.</p>
+            </div>
+          </div>
+          
+          <div class="news-card">
+            <div class="news-image" style="background-image: url('https://rupbes.by/Content/Images/News/1714657460.jpg');"></div>
+            <div class="news-content">
+              <div class="news-date">5 мая 2023</div>
+              <h3 class="news-title">Безопасность на дорогах</h3>
+              <p class="news-excerpt">Снижение аварийности на 15% за последний квартал благодаря новым мерам контроля.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Контакты</h3>
+        <p>Телефон: +375 (33) 444-55-66</p>
+        <p>Email: info@gai.by</p>
+        <p>Адрес: г. Минск, ул. Ленина, 1</p>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Режим работы</h3>
+        <p>Пн-Пт: 08:00–20:00</p>
+        <p>Сб-Вс: 09:00–18:00</p>
+        <p>Электронные сервисы: 24/7</p>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Полезные ссылки</h3>
+        <a href="#">Законодательство</a>
+        <a href="#">Тарифы и штрафы</a>
+        <a href="#">Частые вопросы</a>
+        <a href="#">Обратная связь</a>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 Государственная Автоинспекция РБ. Все права защищены.</p>
+    </div>
+  </footer>
+
+  <script src="menu.js"></script>
+</body>
+</html>

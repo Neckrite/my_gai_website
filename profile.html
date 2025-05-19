@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | ГАИ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a1a3a;
+            --secondary-color: #00a8ff;
+            --accent-color: #ff3366;
+            --light-color: #f8f9fa;
+            --dark-color: #1a1a2e;
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)), 
+                        url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .top-bar img {
+            width: 60px;
+            height: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s;
+        }
+
+        .top-bar img:hover {
+            transform: scale(1.1);
+        }
+
+        .page-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 80px;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .profile-container:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 30px rgba(0, 168, 255, 0.3);
+        }
+
+        .profile-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .profile-container h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+        }
+
+        .profile-container input,
+        .profile-container select {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .profile-container input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .profile-container input:focus,
+        .profile-container select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+
+        /* Стили для выпадающего списка */
+        .profile-container select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            background-color: #000;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .profile-container button {
+            flex: 1;
+            padding: 12px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .profile-container button:hover {
+            background: #0088cc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .profile-container button#logout {
+            background: rgba(255, 51, 102, 0.2);
+            border: 1px solid var(--accent-color);
+        }
+
+        .profile-container button#logout:hover {
+            background: var(--accent-color);
+        }
+
+        /* Стили для админ-панели */
+        .admin-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .admin-container:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .admin-container h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            text-align: center;
+        }
+
+        .admin-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .admin-container th {
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--secondary-color);
+            padding: 12px;
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .admin-container td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .admin-container tr:hover td {
+            background: rgba(0, 168, 255, 0.05);
+        }
+
+        .admin-btn {
+            padding: 8px 12px;
+            margin: 2px;
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .admin-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .toggle-fines-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .toggle-fines-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .fines-list {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fines-list h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .fines-list p {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+
+        .fine-detail {
+            margin: 5px 0;
+            padding: 8px;
+            background: rgba(255, 51, 102, 0.1);
+            border-left: 3px solid var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-container,
+            .admin-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar" id="logo">
+        <img src="photo/logo.png" alt="Логотип ГАИ">
+    </div>
+
+    <div class="page-container">
+        <div class="profile-container">
+            <label for="avatarInput">
+                <img id="avatar" src="default-avatar.png" alt="Аватар">
+            </label>
+            <input type="file" id="avatarInput" style="display: none;" accept="image/*">
+            <h2 id="profileName">Имя Фамилия</h2>
+            <form id="profileForm">
+                <input type="text" id="info" placeholder="Дополнительная информация">
+                <input type="date" id="dob" placeholder="Дата рождения">
+                <select id="country">
+                    <option value="">Выберите город</option>
+                    <option value="Новополоцк">Новополоцк</option>
+                    <option value="Полоцк">Полоцк</option>
+                    <option value="Минск">Минск</option>
+                    <option value="Витебск">Витебск</option>
+                    <option value="Гомель">Гомель</option>
+                    <option value="Брест">Брест</option>
+                    <option value="Гродно">Гродно</option>
+                    <option value="Могилев">Могилев</option>
+                    <option value="Другие">Другие</option>
+                </select>
+                <div class="button-group">
+                    <button type="submit">Сохранить</button>
+                    <button type="button" id="logout">Выйти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

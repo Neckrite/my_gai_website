@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запись на техосмотр | ГАИ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a1a3a;
+            --secondary-color: #00a8ff;
+            --accent-color: #ff3366;
+            --light-color: #f8f9fa;
+            --dark-color: #1a1a2e;
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)), 
+                        url('photo/gai_rb.jpg') center/cover no-repeat fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .top-bar img {
+            width: 60px;
+            height: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s;
+        }
+
+        .top-bar img:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin: 80px auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .container:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 40px rgba(0, 168, 255, 0.3);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 20px 0 15px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        button {
+            padding: 12px 20px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        button:hover {
+            background: #0088cc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 168, 255, 0.5);
+        }
+
+        .admin-btn {
+            background: rgba(255, 51, 102, 0.2);
+            border: 1px solid var(--accent-color);
+            box-shadow: none;
+        }
+
+        .admin-btn:hover {
+            background: var(--accent-color);
+        }
+
+        .alert {
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeIn 0.3s;
+        }
+
+        .alert.error {
+            background: rgba(255, 51, 102, 0.2);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .alert.success {
+            background: rgba(0, 200, 100, 0.2);
+            border: 1px solid #00c864;
+            color: #00c864;
+        }
+
+        .schedule-container {
+            margin-top: 30px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            background: rgba(0, 168, 255, 0.2);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .time-slot.booked {
+            background: rgba(255, 51, 102, 0.1);
+            border-color: var(--accent-color);
+            cursor: not-allowed;
+        }
+
+        .time-slot.user-booking {
+            background: rgba(0, 168, 255, 0.2);
+            border-color: var(--secondary-color);
+        }
+
+        .booking-item {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .booking-item:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .booking-item p {
+            margin: 8px 0;
+        }
+
+        .booking-item button {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 60px auto;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .time-slots {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar" id="logo">
+        <img src="photo/logo.png" alt="Логотип ГАИ">
+    </div>
+
+    <div class="container">
+        <h2>Запись на технический осмотр</h2>
+        
+        <div id="userView">
+            <div class="form-group">
+                <label for="userCarNumber">Гос. номер автомобиля</label>
+                <input type="text" id="userCarNumber" placeholder="Пример: 1234AB-7" required>
+            </div>
+            
+            <div id="userBookings" class="user-bookings">
+                <!-- Здесь будут отображаться записи пользователя -->
+            </div>
+            
+            <div id="scheduleView">
+                <h3>Доступные даты</h3>
+                <div id="scheduleContainer" class="schedule-container">
+                    <!-- Здесь будет отображаться расписание -->
+                </div>
+            </div>
+        </div>
+        
+        <div id="adminView" style="display: none;">
+            <div class="form-group">
+                <label for="inspectionDate">Дата</label>
+                <input type="date" id="inspectionDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="inspectionTime">Время</label>
+                <input type="time" id="inspectionTime" required>
+            </div>
+            
+            <button id="addScheduleBtn" class="admin-btn">Добавить время для записи</button>
+            
+            <div id="adminSchedule" class="schedule-container">
+                <!-- Здесь будет отображаться расписание для админа -->
+            </div>
+        </div>
+        
+        <div id="alert" class="alert"></div>
+    </div>
+    
+    <script src="teh.js"></script>
+</body>
+</html>
